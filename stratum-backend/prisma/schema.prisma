@@ -1,0 +1,55 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Interview {
+  id            String   @id @default(uuid())
+  interviewId   String   @unique
+  filename      String
+  duration      Float
+  speakerCount  Int
+  chunkCount    Int
+  audit         Json
+  scores        Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  chunks        Chunk[]
+
+  @@map("interviews")
+}
+
+model Chunk {
+  id                String   @id @default(uuid())
+  interviewId       String
+  chunkIndex        Int
+  chunkId           String
+  transcriptText    String?
+  sentiment         String?
+  words             Json?
+  speakerId         String?
+  speakerConfidence Float?
+  crosstalk         Boolean  @default(false)
+  startTime         Float
+  endTime           Float
+  duration          Float
+  acoustic          Json?
+  emotion           Json?
+  hesitationDetected  Boolean @default(false)
+  energyDrop          Boolean @default(false)
+  pitchInstability    Boolean @default(false)
+  crosstalkDetected   Boolean @default(false)
+  audioUrl          String?
+  createdAt         DateTime @default(now())
+  interview         Interview @relation(fields: [interviewId], references: [interviewId], onDelete: Cascade)
+
+  @@index([interviewId])
+  @@index([chunkId])
+  @@map("chunks")
+}

@@ -1,20 +1,3 @@
-"""
-undertone / pipeline / ingestion.py
-------------------------------------
-Step 1: Ingestion & Normalization
-
-Responsibilities:
-  - Accept an audio or video file path
-  - If video: extract audio track via FFmpeg
-  - Load audio with librosa, resample to 16kHz mono
-  - Validate format, duration, and integrity
-  - Write the normalized WAV to the session directory
-  - Return an IngestionResult with everything downstream needs
-
-Nothing downstream touches the original file.
-Everything reads from the normalized WAV written here.
-"""
-
 import os
 import logging
 import subprocess

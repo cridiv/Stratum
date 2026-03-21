@@ -1,15 +1,3 @@
-"""
-undertone / pipeline / segmentation.py
----------------------------------------
-Step 2: Segmentation
-
-Responsibilities:
-  - Run RMS energy analysis on the normalized audio
-  - Detect silence regions below threshold for 300-500ms minimum
-  - Output ordered list of (start, end) timestamp pairs
-  - Slice the normalized audio into individual chunk WAV files saved to disk
-"""
-
 import logging
 from pathlib import Path
 

@@ -1,2 +1,11 @@
 librosa
 soundfile
+assemblyai
+numpy
+hume
+jiwer
+scikit-learn
+gensim
+fastapi
+uvicorn
+python-multipart
