@@ -15,6 +15,7 @@ export class InterviewService {
    */
   async saveResult(
     pipelineOutput: any,
+    userId:         string,
     filename:       string,
     audioUrlMap:    Map<string, string>,
     fullAudioUrl:   string | null = null,
@@ -33,6 +34,7 @@ export class InterviewService {
     const interview = await this.prisma.interview.create({
       data: {
         interviewId,
+        userId,
         filename,
         duration,
         speakerCount,
@@ -76,8 +78,9 @@ export class InterviewService {
    * List all interviews — most recent first.
    * Returns lightweight records without chunks.
    */
-  async findAll() {
+  async findAll(userId: string) {
     return this.prisma.interview.findMany({
+      where: { userId },
       orderBy: { createdAt: 'desc' },
       select: {
         id:                    true,
@@ -88,6 +91,8 @@ export class InterviewService {
         chunkCount:            true,
         audioUrl:              true,
         title:                 true,
+        audit:                 true,
+        scores:                true,
         formattedParagraphs:   true,
         createdAt:             true,
       },
@@ -97,9 +102,9 @@ export class InterviewService {
   /**
    * Get one interview with all its chunks.
    */
-  async findOne(interviewId: string) {
-    const interview = await this.prisma.interview.findUnique({
-      where:   { interviewId },
+  async findOne(interviewId: string, userId: string) {
+    const interview = await this.prisma.interview.findFirst({
+      where:   { interviewId, userId },
       include: { chunks: { orderBy: { chunkIndex: 'asc' } } },
     });
 
@@ -113,7 +118,9 @@ export class InterviewService {
   /**
    * Get just the chunks for an interview — paginated.
    */
-  async findChunks(interviewId: string, skip = 0, take = 20) {
+  async findChunks(interviewId: string, userId: string, skip = 0, take = 20) {
+    await this.findOne(interviewId, userId);
+
     return this.prisma.chunk.findMany({
       where:   { interviewId },
       orderBy: { chunkIndex: 'asc' },
@@ -125,9 +132,9 @@ export class InterviewService {
   /**
    * Get just the audit findings for an interview.
    */
-  async findAudit(interviewId: string) {
-    const interview = await this.prisma.interview.findUnique({
-      where:  { interviewId },
+  async findAudit(interviewId: string, userId: string) {
+    const interview = await this.prisma.interview.findFirst({
+      where:  { interviewId, userId },
       select: { audit: true, scores: true },
     });
 
@@ -143,7 +150,9 @@ export class InterviewService {
    * Groups consecutive chunks into natural paragraphs based on semantic flow.
    * Also generates a short title (3-4 words) for the transcript.
    */
-  async formatAndSaveTranscript(interviewId: string, apiKey: string) {
+  async formatAndSaveTranscript(interviewId: string, userId: string, apiKey: string) {
+    await this.findOne(interviewId, userId);
+
     // Fetch all chunks for this interview
     const chunks = await this.prisma.chunk.findMany({
       where: { interviewId },

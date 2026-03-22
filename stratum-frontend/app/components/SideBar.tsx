@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 interface SidebarContextType {
@@ -79,16 +80,16 @@ const ChevronLeftIcon = () => (
 );
 
 const NAV_ITEMS: NavItem[] = [
-  { id: "transcript", label: "Transcript", icon: <TranscriptIcon />, href: "/transcript", section: "main" },
   { id: "dashboard",   label: "Dashboard",   icon: <DashboardIcon />,  href: "/dashboard",   section: "main" },
-  { id: "audit-log",   label: "Audit Log",   icon: <AuditIcon />,      href: "/audit-log",   section: "main" },
+  { id: "transcript", label: "Transcript", icon: <TranscriptIcon />, href: "/transcript", section: "main" },
+  { id: "audit-log",   label: "Audit Log",   icon: <AuditIcon />,      href: "/audit",   section: "main" },
   { id: "account",     label: "Account",     icon: <AccountIcon />,    href: "/account",     section: "bottom" },
 ];
 
 export default function Sidebar() {
   const { isOpen, toggle } = useSidebar();
   const pathname = usePathname();
-  const active = NAV_ITEMS.find((i) => pathname.startsWith(i.href))?.id ?? "transcript";
+  const active = NAV_ITEMS.find((i) => pathname.startsWith(i.href))?.id ?? "dashboard";
 
   const mainItems   = NAV_ITEMS.filter((i) => i.section === "main");
   const bottomItems = NAV_ITEMS.filter((i) => i.section === "bottom");
@@ -102,48 +103,29 @@ export default function Sidebar() {
           transition: "transform 220ms cubic-bezier(0.22, 1, 0.36, 1), width 220ms cubic-bezier(0.22, 1, 0.36, 1)",
           width: isOpen ? "220px" : "0px",
         }}
-        className="fixed left-0 top-0 bottom-0 z-60 overflow-hidden bg-[#f3f4f6] text-black border-r border-gray-300 flex flex-col"
+        className="fixed left-0 top-0 bottom-0 z-60 overflow-hidden bg-black text-white border-r border-gray-800 flex flex-col"
       >
         <div className="flex flex-col h-full w-[220px] px-2 py-3">
           {/* Toggle button */}
           <button
             onClick={toggle}
-            className="mb-2 w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-black hover:bg-white/70 transition-all duration-150"
+            className="mb-2 w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-white hover:bg-white/10 transition-all duration-150"
             title="Close sidebar"
           >
             {/* Logo */}
             <div className="flex items-center gap-2 select-none">
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="22" height="22" rx="6" fill="#111827" />
-                {/* waveform bars */}
-                {[3, 5, 7, 9, 11, 13, 15, 17, 19].map((x, i) => {
-                  const heights = [4, 8, 12, 10, 14, 10, 12, 8, 4];
-                  const h = heights[i];
-                  return (
-                    <rect
-                      key={x}
-                      x={x - 0.5}
-                      y={11 - h / 2}
-                      width={1.5}
-                      height={h}
-                      rx={0.75}
-                      fill="white"
-                      opacity={0.9}
-                    />
-                  );
-                })}
-              </svg>
+              <Image
+                src="/stratum-mark.svg"
+                alt="Stratum mark"
+                width={22}
+                height={22}
+                style={{ display: "block", borderRadius: 6 }}
+              />
               <span
                 style={{
                   fontSize: 14,
                   fontWeight: 600,
-                  color: "#111827",
+                  color: "#FFFFFF",
                   letterSpacing: "-0.02em",
                 }}
               >
@@ -152,7 +134,7 @@ export default function Sidebar() {
             </div>
 
 
-            <span className="text-black/70 hover:text-black">
+            <span className="text-white/70 hover:text-white">
               <ChevronLeftIcon />
             </span>
           </button>
@@ -165,7 +147,7 @@ export default function Sidebar() {
           </nav>
 
           {/* Divider */}
-          <div className="h-px bg-gray-300 mx-2 my-2" />
+          <div className="h-px bg-gray-800 mx-2 my-2" />
 
           {/* Bottom nav */}
           <div className="flex flex-col gap-0.5">
@@ -180,7 +162,7 @@ export default function Sidebar() {
       {!isOpen && (
         <button
           onClick={toggle}
-          className="fixed left-3 top-[16px] z-30 w-9 h-9 flex items-center justify-center rounded-lg bg-[#f3f4f6] border border-gray-300 shadow-md hover:shadow-lg hover:bg-gray-100 text-black/80 hover:text-black transition-all duration-150"
+          className="fixed left-3 top-[16px] z-30 w-9 h-9 flex items-center justify-center rounded-lg bg-black border border-gray-800 shadow-md hover:shadow-lg hover:bg-gray-900 text-white/80 hover:text-white transition-all duration-150"
           title="Open sidebar"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -200,8 +182,8 @@ function NavButton({ item, isActive }: { item: NavItem; isActive: boolean }) {
       className={[
         "group relative w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] font-medium transition-all duration-150 text-left select-none whitespace-nowrap",
         isActive
-          ? "bg-white text-black shadow-sm border border-gray-300"
-          : "text-black hover:bg-white/70",
+          ? "bg-white/10 text-white shadow-sm border border-gray-700"
+          : "text-white/85 hover:bg-white/10",
       ].join(" ")}
     >
       {/* Active bar */}
@@ -215,7 +197,7 @@ function NavButton({ item, isActive }: { item: NavItem; isActive: boolean }) {
           "w-[28px] h-[28px] rounded-md flex items-center justify-center flex-shrink-0 transition-colors",
           isActive
             ? "bg-accent/10 text-accent"
-            : "bg-gray-200 text-black/70 group-hover:bg-gray-300 group-hover:text-black",
+            : "bg-gray-800 text-white/70 group-hover:bg-gray-700 group-hover:text-white",
         ].join(" ")}
       >
         {item.icon}

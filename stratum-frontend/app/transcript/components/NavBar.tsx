@@ -62,7 +62,7 @@ function SpeakerLegend({
             gap: 6,
             fontSize: 12,
             fontWeight: 500,
-            color: "#6B7280",
+            color: "#E5E7EB",
             letterSpacing: "0.01em",
           }}
         >
@@ -91,25 +91,25 @@ function ColorToggle({
         gap: 7,
         padding: "5px 11px",
         borderRadius: 6,
-        border: "1px solid #E5E7EB",
-        background: mono ? "#F9FAFB" : "#FFFFFF",
+        border: "1px solid #2A2A2A",
+        background: mono ? "#1A1A1A" : "#111111",
         cursor: "pointer",
         fontSize: 12,
         fontWeight: 500,
-        color: "#374151",
+        color: "#FFFFFF",
         letterSpacing: "0.01em",
         transition: "all 0.15s ease",
         fontFamily: "inherit",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.borderColor = "#D1D5DB";
-        (e.currentTarget as HTMLButtonElement).style.background = "#F3F4F6";
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "#E8B96A";
+        (e.currentTarget as HTMLButtonElement).style.background = "#1F2937";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.borderColor = "#E5E7EB";
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "#2A2A2A";
         (e.currentTarget as HTMLButtonElement).style.background = mono
-          ? "#F9FAFB"
-          : "#FFFFFF";
+          ? "#1A1A1A"
+          : "#111111";
       }}
     >
       {/* Swatch stack */}
@@ -160,10 +160,10 @@ export default function Navbar({
           position: "sticky",
           top: 0,
           zIndex: 50,
-          background: "rgba(255,255,255,0.92)",
+          background: "rgba(0,0,0,0.92)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
-          borderBottom: "1px solid #E9EAEC",
+          borderBottom: "1px solid #2A2A2A",
           boxShadow: "0 1px 0 0 rgba(0,0,0,0.04)",
         }}
       >
@@ -192,7 +192,7 @@ export default function Navbar({
                 style={{
                   fontSize: 13,
                   fontWeight: 600,
-                  color: "#111827",
+                  color: "#FFFFFF",
                   letterSpacing: "-0.01em",
                   lineHeight: 1.2,
                 }}
@@ -203,7 +203,7 @@ export default function Navbar({
                 style={{
                   fontFamily: "'DM Mono', monospace",
                   fontSize: 10,
-                  color: "#9CA3AF",
+                  color: "#D1D5DB",
                   fontWeight: 400,
                   letterSpacing: "0.02em",
                   lineHeight: 1,
@@ -224,7 +224,7 @@ export default function Navbar({
                 display: "inline-block",
                 width: 1,
                 height: 16,
-                background: "#E5E7EB",
+                background: "#2A2A2A",
               }}
             />
 

@@ -141,7 +141,7 @@ function WordAnnotatedChunk({
                 ? mono ? "rgba(55,65,81,0.10)" : `${speaker.color}1f`
                 : "transparent",
               color: isActive
-                ? mono ? "#111827" : speaker.color
+                ? mono ? "#FFFFFF" : speaker.color
                 : "inherit",
               transition: "background 0.12s, color 0.12s",
             }}
@@ -169,11 +169,11 @@ function EmotionBar({ label, value }: { label: string; value: number }) {
   const color = value > 0.7 ? "#2563EB" : value > 0.45 ? "#D97706" : "#9CA3AF";
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#6B7280", fontWeight: 500 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#D1D5DB", fontWeight: 500 }}>
         <span>{label}</span>
-        <span style={{ fontFamily: "'DM Mono', monospace", color: "#374151" }}>{value.toFixed(2)}</span>
+        <span style={{ fontFamily: "'DM Mono', monospace", color: "#FFFFFF" }}>{value.toFixed(2)}</span>
       </div>
-      <div style={{ height: 4, borderRadius: 99, background: "#F3F4F6", overflow: "hidden" }}>
+      <div style={{ height: 4, borderRadius: 99, background: "#2A2A2A", overflow: "hidden" }}>
         <div style={{ height: "100%", width: `${pct}%`, borderRadius: 99, background: color, transition: "width 0.4s cubic-bezier(0.22,1,0.36,1)" }} />
       </div>
     </div>
@@ -182,9 +182,9 @@ function EmotionBar({ label, value }: { label: string; value: number }) {
 
 function MetaRow({ label, value }: { label: string; value: string | number }) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "7px 0", borderBottom: "1px solid #F3F4F6" }}>
-      <span style={{ fontSize: 11, color: "#9CA3AF", fontWeight: 500, letterSpacing: "0.03em", textTransform: "uppercase" }}>{label}</span>
-      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: "#111827", fontWeight: 500 }}>{value}</span>
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "7px 0", borderBottom: "1px solid #2A2A2A" }}>
+      <span style={{ fontSize: 11, color: "#D1D5DB", fontWeight: 500, letterSpacing: "0.03em", textTransform: "uppercase" }}>{label}</span>
+      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: "#FFFFFF", fontWeight: 500 }}>{value}</span>
     </div>
   );
 }
@@ -204,23 +204,23 @@ function MetadataPanel({
 }) {
   const speaker = getSpeaker(chunk.speaker, speakers);
   return (
-    <aside style={{ width: 280, flexShrink: 0, borderLeft: "1px solid #E9EAEC", background: "#FFFFFF", display: "flex", flexDirection: "column", overflowY: "auto", animation: "slideIn 0.22s cubic-bezier(0.22,1,0.36,1)" }}>
+    <aside style={{ width: 280, flexShrink: 0, borderLeft: "1px solid #2A2A2A", background: "#111111", display: "flex", flexDirection: "column", overflowY: "auto", animation: "slideIn 0.22s cubic-bezier(0.22,1,0.36,1)" }}>
       <style>{`@keyframes slideIn { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }`}</style>
 
       {/* Header */}
-      <div style={{ padding: "14px 16px 12px", borderBottom: "1px solid #F3F4F6", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, background: "#FFFFFF", zIndex: 1 }}>
+      <div style={{ padding: "14px 16px 12px", borderBottom: "1px solid #2A2A2A", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, background: "#111111", zIndex: 1 }}>
         <div>
-          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#9CA3AF", letterSpacing: "0.04em" }}>{chunk.id}</div>
-          <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", display: "flex", alignItems: "center", gap: 6, marginTop: 3 }}>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#D1D5DB", letterSpacing: "0.04em" }}>{chunk.id}</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: "#FFFFFF", display: "flex", alignItems: "center", gap: 6, marginTop: 3 }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: speaker.color, display: "inline-block" }} />
             {speaker.label}
           </div>
         </div>
         <button
           onClick={onClose}
-          style={{ width: 28, height: 28, borderRadius: 7, border: "1px solid #E9EAEC", background: "#F9FAFB", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#6B7280", transition: "all 0.15s" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#F3F4F6"; (e.currentTarget as HTMLButtonElement).style.color = "#111827"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#F9FAFB"; (e.currentTarget as HTMLButtonElement).style.color = "#6B7280"; }}
+          style={{ width: 28, height: 28, borderRadius: 7, border: "1px solid #2A2A2A", background: "#1A1A1A", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#D1D5DB", transition: "all 0.15s" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#2A2A2A"; (e.currentTarget as HTMLButtonElement).style.color = "#FFFFFF"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#1A1A1A"; (e.currentTarget as HTMLButtonElement).style.color = "#D1D5DB"; }}
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -234,7 +234,7 @@ function MetadataPanel({
           margin: 0,
           fontSize: 12,
           lineHeight: 1.65,
-          color: "#6B7280",
+          color: "#D1D5DB",
           fontStyle: "italic",
           borderLeft: `3px solid ${speaker.color}`,
           paddingLeft: 10,
@@ -254,8 +254,8 @@ function MetadataPanel({
       </div>
 
       {/* Emotions */}
-      <div style={{ padding: "12px 16px 16px", borderTop: "1px solid #F3F4F6", display: "flex", flexDirection: "column", gap: 10 }}>
-        <div style={{ fontSize: 10, fontWeight: 600, color: "#9CA3AF", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 2 }}>Emotion Analysis</div>
+      <div style={{ padding: "12px 16px 16px", borderTop: "1px solid #2A2A2A", display: "flex", flexDirection: "column", gap: 10 }}>
+        <div style={{ fontSize: 10, fontWeight: 600, color: "#D1D5DB", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 2 }}>Emotion Analysis</div>
         {chunk.emotions.map((e) => <EmotionBar key={e.label} label={e.label} value={e.value} />)}
       </div>
 
@@ -264,9 +264,9 @@ function MetadataPanel({
         <button
           onClick={() => onPlayChunk(chunk)}
           disabled={!canPlayChunk}
-          style={{ width: "100%", padding: "9px 14px", borderRadius: 8, border: "1px solid #E9EAEC", background: canPlayChunk ? "#F9FAFB" : "#F3F4F6", cursor: canPlayChunk ? "pointer" : "not-allowed", fontSize: 12, fontWeight: 600, color: canPlayChunk ? "#374151" : "#9CA3AF", display: "flex", alignItems: "center", justifyContent: "center", gap: 7, transition: "all 0.15s", fontFamily: "'DM Sans', sans-serif" }}
-          onMouseEnter={(e) => { if (!canPlayChunk) return; (e.currentTarget as HTMLButtonElement).style.background = "#111827"; (e.currentTarget as HTMLButtonElement).style.color = "#FFFFFF"; (e.currentTarget as HTMLButtonElement).style.borderColor = "#111827"; }}
-          onMouseLeave={(e) => { if (!canPlayChunk) return; (e.currentTarget as HTMLButtonElement).style.background = "#F9FAFB"; (e.currentTarget as HTMLButtonElement).style.color = "#374151"; (e.currentTarget as HTMLButtonElement).style.borderColor = "#E9EAEC"; }}
+          style={{ width: "100%", padding: "9px 14px", borderRadius: 8, border: "1px solid #2A2A2A", background: canPlayChunk ? "#1A1A1A" : "#2A2A2A", cursor: canPlayChunk ? "pointer" : "not-allowed", fontSize: 12, fontWeight: 600, color: canPlayChunk ? "#FFFFFF" : "#9CA3AF", display: "flex", alignItems: "center", justifyContent: "center", gap: 7, transition: "all 0.15s", fontFamily: "'DM Sans', sans-serif" }}
+          onMouseEnter={(e) => { if (!canPlayChunk) return; (e.currentTarget as HTMLButtonElement).style.background = "#E8B96A"; (e.currentTarget as HTMLButtonElement).style.color = "#111111"; (e.currentTarget as HTMLButtonElement).style.borderColor = "#E8B96A"; }}
+          onMouseLeave={(e) => { if (!canPlayChunk) return; (e.currentTarget as HTMLButtonElement).style.background = "#1A1A1A"; (e.currentTarget as HTMLButtonElement).style.color = "#FFFFFF"; (e.currentTarget as HTMLButtonElement).style.borderColor = "#2A2A2A"; }}
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21" /></svg>
           Play chunk
@@ -441,7 +441,7 @@ export default function TranscriptPage({ interviewId }: TranscriptPageProps) {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", fontSize: 13, color: "#9CA3AF", fontFamily: "'DM Mono', monospace" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", fontSize: 13, color: "#D1D5DB", fontFamily: "'DM Mono', monospace", background: "#000000" }}>
         Loading interview…
       </div>
     );
@@ -452,11 +452,11 @@ export default function TranscriptPage({ interviewId }: TranscriptPageProps) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
         * { box-sizing: border-box; }
-        body { margin: 0; background: #F7F6F3; }
+        body { margin: 0; background: #000000; }
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
 
-      <div style={{ fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", height: "100vh", background: "#F7F6F3" }}>
+      <div style={{ fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", height: "100vh", background: "#000000" }}>
         <audio
           ref={audioRef}
           src={audioUrl ?? undefined}
@@ -485,11 +485,11 @@ export default function TranscriptPage({ interviewId }: TranscriptPageProps) {
           <main style={{ flex: 1, overflowY: "auto" }}>
 
             {/* ── Audio player bar ─────────────────────────────────────── */}
-            <div style={{ padding: "12px 24px", borderBottom: "1px solid #E9EAEC", background: "#FFFFFF", display: "flex", alignItems: "center", gap: 14, position: "sticky", top: 0, zIndex: 10 }}>
+            <div style={{ padding: "12px 24px", borderBottom: "1px solid #2A2A2A", background: "#111111", display: "flex", alignItems: "center", gap: 14, position: "sticky", top: 0, zIndex: 10 }}>
               <button
                 onClick={handleTogglePlay}
                 disabled={!audioUrl}
-                style={{ width: 34, height: 34, borderRadius: 8, background: audioUrl ? "#111827" : "#D1D5DB", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: audioUrl ? "pointer" : "not-allowed", color: "#FFFFFF", flexShrink: 0, transition: "opacity 0.15s" }}
+                style={{ width: 34, height: 34, borderRadius: 8, background: audioUrl ? "#E8B96A" : "#5A5A5A", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: audioUrl ? "pointer" : "not-allowed", color: audioUrl ? "#111111" : "#F3F4F6", flexShrink: 0, transition: "opacity 0.15s" }}
                 onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "0.8")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.opacity = "1")}
               >
@@ -498,20 +498,20 @@ export default function TranscriptPage({ interviewId }: TranscriptPageProps) {
                   : <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21" /></svg>
                 }
               </button>
-              <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#6B7280", flexShrink: 0 }}>
+              <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#E5E7EB", flexShrink: 0 }}>
                 {formatPlaybackTime(currentTime)} / {formatPlaybackTime(duration)}
               </span>
               <div ref={progressRef} onClick={handleSeek} style={{ flex: 1, position: "relative", height: 28, cursor: audioUrl ? "pointer" : "default" }}>
-                <div style={{ position: "absolute", inset: "10px 0", borderRadius: 99, background: "#F3F4F6" }} />
-                <div style={{ position: "absolute", top: 10, left: 0, width: `${progressPercent}%`, height: 8, borderRadius: 99, background: "#111827" }} />
+                <div style={{ position: "absolute", inset: "10px 0", borderRadius: 99, background: "#2A2A2A" }} />
+                <div style={{ position: "absolute", top: 10, left: 0, width: `${progressPercent}%`, height: 8, borderRadius: 99, background: "#E8B96A" }} />
                 <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", gap: 2, paddingInline: 2 }}>
                   {Array.from({ length: 80 }).map((_, i) => {
                     const h = 4 + Math.sin(i * 0.7) * 3 + Math.sin(i * 0.3) * 5;
-                    return <div key={i} style={{ width: 2, height: Math.max(3, h), borderRadius: 2, background: ((i + 1) / 80) * 100 <= progressPercent ? "#111827" : "#E5E7EB", flexShrink: 0 }} />;
+                    return <div key={i} style={{ width: 2, height: Math.max(3, h), borderRadius: 2, background: ((i + 1) / 80) * 100 <= progressPercent ? "#E8B96A" : "#4B5563", flexShrink: 0 }} />;
                   })}
                 </div>
               </div>
-              <button onClick={handleSpeedToggle} disabled={!audioUrl} style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, fontWeight: 600, padding: "4px 9px", borderRadius: 6, border: "1px solid #E5E7EB", background: "#F9FAFB", cursor: audioUrl ? "pointer" : "not-allowed", color: "#374151", flexShrink: 0 }}>
+              <button onClick={handleSpeedToggle} disabled={!audioUrl} style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, fontWeight: 600, padding: "4px 9px", borderRadius: 6, border: "1px solid #2A2A2A", background: "#1A1A1A", cursor: audioUrl ? "pointer" : "not-allowed", color: "#FFFFFF", flexShrink: 0 }}>
                 {playbackRate}×
               </button>
             </div>
@@ -519,30 +519,30 @@ export default function TranscriptPage({ interviewId }: TranscriptPageProps) {
             {/* ── Document body ─────────────────────────────────────────── */}
             <div style={{ maxWidth: 680, margin: "0 auto", padding: "52px 40px 100px" }}>
 
-              <h1 style={{ margin: "0 0 8px", fontSize: 22, fontWeight: 600, color: "#111827", letterSpacing: "-0.03em", lineHeight: 1.25 }}>{title}</h1>
+              <h1 style={{ margin: "0 0 8px", fontSize: 22, fontWeight: 600, color: "#FFFFFF", letterSpacing: "-0.03em", lineHeight: 1.25 }}>{title}</h1>
 
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 36, flexWrap: "wrap" }}>
-                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#9CA3AF" }}>{filename}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#D1D5DB" }}>{filename}</span>
                 <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#D1D5DB", display: "inline-block" }} />
-                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#9CA3AF" }}>{formatPlaybackTime(duration)}</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#D1D5DB" }}>{formatPlaybackTime(duration)}</span>
                 <span style={{ width: 3, height: 3, borderRadius: "50%", background: "#D1D5DB", display: "inline-block" }} />
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   {speakers.map((s) => (
                     <div key={s.id} style={{ display: "flex", alignItems: "center", gap: 4 }}>
                       <span style={{ width: 6, height: 6, borderRadius: "50%", background: mono ? "#D1D5DB" : s.color, display: "inline-block", transition: "background 0.3s" }} />
-                      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#9CA3AF" }}>{s.label}</span>
+                      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#D1D5DB" }}>{s.label}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div style={{ width: "100%", height: 1, background: "#E9EAEC", marginBottom: 36 }} />
+              <div style={{ width: "100%", height: 1, background: "#2A2A2A", marginBottom: 36 }} />
 
               {/* Grouping loading spinner */}
               {formattingTranscript && chunks.length > 0 && (
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
-                  <div style={{ width: 13, height: 13, borderRadius: "50%", border: "2px solid #E9EAEC", borderTopColor: "#6B7280", animation: "spin 0.75s linear infinite" }} />
-                  <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#9CA3AF" }}>Formatting transcript…</span>
+                  <div style={{ width: 13, height: 13, borderRadius: "50%", border: "2px solid #2A2A2A", borderTopColor: "#E8B96A", animation: "spin 0.75s linear infinite" }} />
+                  <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#D1D5DB" }}>Formatting transcript…</span>
                 </div>
               )}
 
@@ -562,7 +562,7 @@ export default function TranscriptPage({ interviewId }: TranscriptPageProps) {
                         margin: 0,
                         fontSize: 15.5,
                         lineHeight: 1.85,
-                        color: "#1F2937",
+                        color: "#FFFFFF",
                         fontWeight: 400,
                         padding: "6px 12px",
                         borderRadius: 6,

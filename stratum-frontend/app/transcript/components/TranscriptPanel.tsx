@@ -37,9 +37,9 @@ function ChunkRow({
         gap: 14,
         padding: "14px 24px",
         cursor: "pointer",
-        background: isActive ? "#F0F4FF" : hovered ? "#FAFAFA" : "transparent",
+        background: isActive ? "#1F2937" : hovered ? "#1A1A1A" : "transparent",
         borderLeft: `3px solid ${
-          isActive ? (mono ? "#374151" : speaker.color) : "transparent"
+          isActive ? (mono ? "#E5E7EB" : speaker.color) : "transparent"
         }`,
         transition: "all 0.15s ease",
       }}
@@ -60,7 +60,7 @@ function ChunkRow({
           style={{
             fontFamily: "'DM Mono', monospace",
             fontSize: 10,
-            color: "#9CA3AF",
+            color: "#D1D5DB",
             letterSpacing: "0.03em",
           }}
         >
@@ -84,7 +84,7 @@ function ChunkRow({
           style={{
             fontSize: 12,
             fontWeight: 600,
-            color: mono ? "#374151" : speaker.color,
+            color: mono ? "#E5E7EB" : speaker.color,
             marginBottom: 5,
             letterSpacing: "0.01em",
             transition: "color 0.3s",
@@ -96,7 +96,7 @@ function ChunkRow({
           style={{
             fontSize: 14,
             lineHeight: 1.65,
-            color: "#374151",
+            color: "#FFFFFF",
             margin: 0,
             fontWeight: 400,
           }}
@@ -172,8 +172,8 @@ export default function TranscriptPanel({
       <div
         style={{
           padding: "12px 24px",
-          borderBottom: "1px solid #E9EAEC",
-          background: "#FFFFFF",
+          borderBottom: "1px solid #2A2A2A",
+          background: "#111111",
           display: "flex",
           alignItems: "center",
           gap: 14,
@@ -188,13 +188,13 @@ export default function TranscriptPanel({
             width: 34,
             height: 34,
             borderRadius: 8,
-            background: "#111827",
+            background: "#E8B96A",
             border: "none",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            color: "#FFFFFF",
+            color: "#111111",
             flexShrink: 0,
             transition: "opacity 0.15s",
           }}
@@ -215,7 +215,7 @@ export default function TranscriptPanel({
           style={{
             fontFamily: "'DM Mono', monospace",
             fontSize: 11,
-            color: "#6B7280",
+            color: "#E5E7EB",
             flexShrink: 0,
           }}
         >
@@ -236,7 +236,7 @@ export default function TranscriptPanel({
               position: "absolute",
               inset: "10px 0",
               borderRadius: 99,
-              background: "#F3F4F6",
+              background: "#2A2A2A",
             }}
           />
           <div
@@ -247,7 +247,7 @@ export default function TranscriptPanel({
               width: "22%",
               height: 8,
               borderRadius: 99,
-              background: "#111827",
+              background: "#E8B96A",
               transition: "width 0.2s",
             }}
           />
@@ -271,7 +271,7 @@ export default function TranscriptPanel({
                     width: 2,
                     height: Math.max(3, h),
                     borderRadius: 2,
-                    background: i < 18 ? "#111827" : "#E5E7EB",
+                    background: i < 18 ? "#E8B96A" : "#4B5563",
                     flexShrink: 0,
                   }}
                 />
@@ -288,10 +288,10 @@ export default function TranscriptPanel({
             fontWeight: 600,
             padding: "4px 9px",
             borderRadius: 6,
-            border: "1px solid #E5E7EB",
-            background: "#F9FAFB",
+            border: "1px solid #2A2A2A",
+            background: "#1A1A1A",
             cursor: "pointer",
-            color: "#374151",
+            color: "#FFFFFF",
             flexShrink: 0,
           }}
         >

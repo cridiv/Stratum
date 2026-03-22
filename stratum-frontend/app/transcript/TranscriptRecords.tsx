@@ -107,7 +107,7 @@ export default function TranscriptRecordsPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
         * { box-sizing: border-box; }
-        body { margin: 0; background: #F7F6F3; }
+        body { margin: 0; background: #000000; }
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
 
@@ -115,15 +115,15 @@ export default function TranscriptRecordsPage() {
         style={{
           fontFamily: "'DM Sans', sans-serif",
           minHeight: "100vh",
-          background: "#F7F6F3",
+          background: "#000000",
           display: "flex",
           flexDirection: "column",
         }}
       >
         <header
           style={{
-            background: "#FFFFFF",
-            borderBottom: "1px solid #E9EAEC",
+            background: "#000000",
+            borderBottom: "1px solid #2A2A2A",
             padding: "12px 24px",
             display: "flex",
             alignItems: "center",
@@ -138,7 +138,7 @@ export default function TranscriptRecordsPage() {
               style={{
                 fontSize: 15,
                 fontWeight: 600,
-                color: "#111827",
+                color: "#FFFFFF",
                 letterSpacing: "-0.02em",
               }}
             >
@@ -148,7 +148,7 @@ export default function TranscriptRecordsPage() {
               style={{
                 fontFamily: "'DM Mono', monospace",
                 fontSize: 11,
-                color: "#9CA3AF",
+                color: "#D1D5DB",
                 marginTop: 2,
               }}
             >
@@ -165,9 +165,9 @@ export default function TranscriptRecordsPage() {
               gap: 7,
               padding: "7px 12px",
               borderRadius: 7,
-              border: "1px solid #E9EAEC",
-              background: uploading ? "#E5E7EB" : "#111827",
-              color: "#FFFFFF",
+              border: "1px solid #2A2A2A",
+              background: uploading ? "#5A5A5A" : "#E8B96A",
+              color: uploading ? "#F3F4F6" : "#111111",
               fontSize: 12,
               fontWeight: 600,
               cursor: uploading ? "not-allowed" : "pointer",
@@ -210,7 +210,7 @@ export default function TranscriptRecordsPage() {
               style={{
                 position: "fixed",
                 inset: 0,
-                background: "rgba(247, 246, 243, 0.82)",
+                background: "rgba(0, 0, 0, 0.82)",
                 backdropFilter: "blur(2px)",
                 display: "flex",
                 alignItems: "center",
@@ -221,11 +221,11 @@ export default function TranscriptRecordsPage() {
               <div
                 style={{
                   width: "min(92vw, 420px)",
-                  background: "#FFFFFF",
-                  border: "1px solid #E9EAEC",
+                  background: "#111111",
+                  border: "1px solid #2A2A2A",
                   borderRadius: 12,
                   padding: "20px 18px",
-                  boxShadow: "0 14px 38px rgba(17,24,39,0.08)",
+                  boxShadow: "0 14px 38px rgba(0,0,0,0.45)",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -238,12 +238,12 @@ export default function TranscriptRecordsPage() {
                     width: 28,
                     height: 28,
                     borderRadius: "50%",
-                    border: "3px solid #E5E7EB",
-                    borderTopColor: "#111827",
+                    border: "3px solid #3A3A3A",
+                    borderTopColor: "#E8B96A",
                     animation: "spin 0.75s linear infinite",
                   }}
                 />
-                <div style={{ fontSize: 14, fontWeight: 600, color: "#111827" }}>
+                <div style={{ fontSize: 14, fontWeight: 600, color: "#FFFFFF" }}>
                   {uploadPhase === "transcribing"
                     ? "Transcript is in progress"
                     : "Uploading audio"}
@@ -251,7 +251,7 @@ export default function TranscriptRecordsPage() {
                 <div
                   style={{
                     fontSize: 12,
-                    color: "#6B7280",
+                    color: "#E5E7EB",
                     fontFamily: "'DM Mono', monospace",
                   }}
                 >
@@ -265,7 +265,7 @@ export default function TranscriptRecordsPage() {
                       marginTop: 4,
                       maxWidth: "100%",
                       fontSize: 11,
-                      color: "#9CA3AF",
+                      color: "#D1D5DB",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -303,7 +303,7 @@ export default function TranscriptRecordsPage() {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "55vh",
-                color: "#6B7280",
+                color: "#E5E7EB",
                 fontSize: 15,
               }}
             >
@@ -327,9 +327,9 @@ export default function TranscriptRecordsPage() {
                   gap: 8,
                   padding: "12px 18px",
                   borderRadius: 10,
-                  border: "1px solid #D1D5DB",
-                  background: "#FFFFFF",
-                  color: "#111827",
+                  border: "1px solid #2A2A2A",
+                  background: "#E8B96A",
+                  color: "#111111",
                   fontSize: 13,
                   fontWeight: 600,
                   cursor: uploading ? "not-allowed" : "pointer",
@@ -355,8 +355,8 @@ export default function TranscriptRecordsPage() {
           ) : (
             <div
               style={{
-                background: "#FFFFFF",
-                border: "1px solid #E9EAEC",
+                background: "#111111",
+                border: "1px solid #2A2A2A",
                 borderRadius: 10,
                 overflow: "hidden",
               }}
@@ -366,8 +366,8 @@ export default function TranscriptRecordsPage() {
                   display: "grid",
                   gridTemplateColumns: "1.6fr 140px 90px 80px 80px",
                   padding: "10px 16px",
-                  borderBottom: "1px solid #F3F4F6",
-                  background: "#FAFAFA",
+                  borderBottom: "1px solid #2A2A2A",
+                  background: "#0D0D0D",
                 }}
               >
                 {["Interview", "Date", "Duration", "Speakers", "Chunks"].map((header) => (
@@ -376,7 +376,7 @@ export default function TranscriptRecordsPage() {
                     style={{
                       fontSize: 10,
                       fontWeight: 600,
-                      color: "#9CA3AF",
+                      color: "#D1D5DB",
                       letterSpacing: "0.06em",
                       textTransform: "uppercase",
                     }}
@@ -397,17 +397,17 @@ export default function TranscriptRecordsPage() {
                     padding: "12px 16px",
                     border: "none",
                     borderBottom:
-                      index < records.length - 1 ? "1px solid #F9FAFB" : "none",
-                    background: "#FFFFFF",
+                      index < records.length - 1 ? "1px solid #1F2937" : "none",
+                    background: "#1A1A1A",
                     textAlign: "left",
                     cursor: "pointer",
                     alignItems: "center",
                   }}
                   onMouseEnter={(event) => {
-                    event.currentTarget.style.background = "#FAFAFA";
+                    event.currentTarget.style.background = "#242424";
                   }}
                   onMouseLeave={(event) => {
-                    event.currentTarget.style.background = "#FFFFFF";
+                    event.currentTarget.style.background = "#1A1A1A";
                   }}
                 >
                   <span
@@ -422,7 +422,7 @@ export default function TranscriptRecordsPage() {
                       style={{
                         fontSize: 13,
                         fontWeight: 600,
-                        color: "#111827",
+                        color: "#FFFFFF",
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
@@ -434,7 +434,7 @@ export default function TranscriptRecordsPage() {
                       style={{
                         fontFamily: "'DM Mono', monospace",
                         fontSize: 10,
-                        color: "#9CA3AF",
+                        color: "#D1D5DB",
                       }}
                     >
                       {record.filename}
@@ -445,7 +445,7 @@ export default function TranscriptRecordsPage() {
                     style={{
                       fontFamily: "'DM Mono', monospace",
                       fontSize: 11,
-                      color: "#6B7280",
+                      color: "#E5E7EB",
                     }}
                   >
                     {formatDate(record.createdAt)}
@@ -455,7 +455,7 @@ export default function TranscriptRecordsPage() {
                     style={{
                       fontFamily: "'DM Mono', monospace",
                       fontSize: 11,
-                      color: "#6B7280",
+                      color: "#E5E7EB",
                     }}
                   >
                     {formatDuration(record.duration)}
@@ -465,7 +465,7 @@ export default function TranscriptRecordsPage() {
                     style={{
                       fontFamily: "'DM Mono', monospace",
                       fontSize: 11,
-                      color: "#6B7280",
+                      color: "#E5E7EB",
                     }}
                   >
                     {record.speakerCount}
@@ -475,7 +475,7 @@ export default function TranscriptRecordsPage() {
                     style={{
                       fontFamily: "'DM Mono', monospace",
                       fontSize: 11,
-                      color: "#6B7280",
+                      color: "#E5E7EB",
                     }}
                   >
                     {record.chunkCount}

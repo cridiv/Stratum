@@ -22,6 +22,8 @@ Usage:
 import sys
 import json
 import logging
+import os
+import tempfile
 from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -77,7 +79,9 @@ def run_pipeline(
     """
 
     file_path   = Path(file_path)
-    session_dir = Path(session_dir) if session_dir else Path("sessions") / interview_id
+    session_dir = Path(session_dir) if session_dir else (
+        Path(os.getenv("STRATUM_SESSIONS_DIR") or (Path(tempfile.gettempdir()) / "stratum" / "sessions")) / interview_id
+    )
     chunks_dir  = session_dir / "chunks"
 
     # Default output path

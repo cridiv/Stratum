@@ -171,7 +171,7 @@ export default function DashboardPage() {
         alignItems: "center",
         justifyContent: "center",
         minHeight: 400,
-        color: "#9CA3AF",
+        color: "#E5E7EB",
       }}
     >
       <div
@@ -244,8 +244,8 @@ export default function DashboardPage() {
   const EmptyState = () => (
     <div
       style={{
-        background: "#FFFFFF",
-        border: "1px solid #E9EAEC",
+        background: "#111111",
+        border: "1px solid #2A2A2A",
         borderRadius: 10,
         padding: "40px 20px",
         textAlign: "center",
@@ -256,7 +256,7 @@ export default function DashboardPage() {
         height="32"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="#D1D5DB"
+        stroke="#9CA3AF"
         strokeWidth="1.5"
         style={{ marginInline: "auto", marginBottom: 12 }}
       >
@@ -267,12 +267,12 @@ export default function DashboardPage() {
         style={{
           fontSize: 13,
           fontWeight: 600,
-          color: "#6B7280",
+          color: "#FFFFFF",
         }}
       >
         No interviews yet
       </div>
-      <div style={{ fontSize: 12, color: "#9CA3AF", marginTop: 4 }}>
+      <div style={{ fontSize: 12, color: "#D1D5DB", marginTop: 4 }}>
         Upload an audio file to get started
       </div>
     </div>
@@ -283,7 +283,7 @@ export default function DashboardPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
         * { box-sizing: border-box; }
-        body { margin: 0; background: #F7F6F3; }
+        body { margin: 0; background: #000000; }
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
       `}</style>
@@ -294,7 +294,7 @@ export default function DashboardPage() {
           display: "flex",
           flexDirection: "column",
           minHeight: "100vh",
-          background: "#F7F6F3",
+          background: "#000000",
         }}
       >
         <main
@@ -313,13 +313,13 @@ export default function DashboardPage() {
                 margin: "0 0 4px",
                 fontSize: 20,
                 fontWeight: 600,
-                color: "#111827",
+                color: "#FFFFFF",
                 letterSpacing: "-0.03em",
               }}
             >
               Dashboard
             </h1>
-            <p style={{ margin: 0, fontSize: 13, color: "#9CA3AF" }}>
+            <p style={{ margin: 0, fontSize: 13, color: "#D1D5DB" }}>
               Overview of your transcription activity
             </p>
           </div>
@@ -345,8 +345,8 @@ export default function DashboardPage() {
                   <div
                     key={s.label}
                     style={{
-                      background: "#FFFFFF",
-                      border: "1px solid #E9EAEC",
+                      background: "#111111",
+                      border: "1px solid #2A2A2A",
                       borderRadius: 10,
                       padding: "18px 20px",
                       display: "flex",
@@ -359,7 +359,7 @@ export default function DashboardPage() {
                       style={{
                         fontSize: 11,
                         fontWeight: 500,
-                        color: "#9CA3AF",
+                        color: "#D1D5DB",
                         letterSpacing: "0.03em",
                         textTransform: "uppercase",
                       }}
@@ -370,7 +370,7 @@ export default function DashboardPage() {
                       style={{
                         fontSize: 26,
                         fontWeight: 600,
-                        color: "#111827",
+                        color: "#FFFFFF",
                         letterSpacing: "-0.04em",
                         lineHeight: 1,
                       }}
@@ -395,7 +395,7 @@ export default function DashboardPage() {
                               ? "#059669"
                               : s.trend === "down"
                                 ? "#EF4444"
-                                : "#9CA3AF",
+                                : "#D1D5DB",
                           fontFamily: "'DM Mono', monospace",
                         }}
                       >
@@ -412,8 +412,8 @@ export default function DashboardPage() {
               ) : (
                 <div
                   style={{
-                    background: "#FFFFFF",
-                    border: "1px solid #E9EAEC",
+                    background: "#111111",
+                    border: "1px solid #2A2A2A",
                     borderRadius: 10,
                     overflow: "hidden",
                   }}
@@ -422,7 +422,7 @@ export default function DashboardPage() {
                   <div
                     style={{
                       padding: "16px 20px 12px",
-                      borderBottom: "1px solid #F3F4F6",
+                      borderBottom: "1px solid #2A2A2A",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
@@ -433,7 +433,7 @@ export default function DashboardPage() {
                         style={{
                           fontSize: 13,
                           fontWeight: 600,
-                          color: "#111827",
+                          color: "#FFFFFF",
                           letterSpacing: "-0.01em",
                         }}
                       >
@@ -442,7 +442,7 @@ export default function DashboardPage() {
                       <div
                         style={{
                           fontSize: 11,
-                          color: "#9CA3AF",
+                          color: "#D1D5DB",
                           marginTop: 1,
                         }}
                       >
@@ -458,7 +458,7 @@ export default function DashboardPage() {
                       display: "grid",
                       gridTemplateColumns: "1fr 100px 80px 56px 72px 80px",
                       padding: "8px 20px",
-                      borderBottom: "1px solid #F3F4F6",
+                      borderBottom: "1px solid #2A2A2A",
                     }}
                   >
                     {["File", "Date", "Duration", "Spkrs", "Segs", "Status"].map(
@@ -468,7 +468,7 @@ export default function DashboardPage() {
                           style={{
                             fontSize: 10,
                             fontWeight: 600,
-                            color: "#9CA3AF",
+                            color: "#D1D5DB",
                             letterSpacing: "0.06em",
                             textTransform: "uppercase",
                           }}
@@ -489,7 +489,7 @@ export default function DashboardPage() {
                         padding: "11px 20px",
                         borderBottom:
                           idx < interviews.length - 1
-                            ? "1px solid #F9FAFB"
+                            ? "1px solid #1F2937"
                             : "none",
                         alignItems: "center",
                         cursor: "pointer",
@@ -498,7 +498,7 @@ export default function DashboardPage() {
                       }}
                       onMouseEnter={(e) => {
                         (e.currentTarget as HTMLDivElement).style.background =
-                          "#FAFAFA";
+                          "#1A1A1A";
                       }}
                       onMouseLeave={(e) => {
                         (e.currentTarget as HTMLDivElement).style.background =
@@ -519,7 +519,7 @@ export default function DashboardPage() {
                             width: 28,
                             height: 28,
                             borderRadius: 7,
-                            background: "#F3F4F6",
+                            background: "#1F2937",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
@@ -531,7 +531,7 @@ export default function DashboardPage() {
                             height="12"
                             viewBox="0 0 24 24"
                             fill="none"
-                            stroke="#6B7280"
+                            stroke="#D1D5DB"
                             strokeWidth="1.8"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -546,7 +546,7 @@ export default function DashboardPage() {
                           style={{
                             fontSize: 13,
                             fontWeight: 500,
-                            color: "#111827",
+                            color: "#FFFFFF",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
@@ -561,7 +561,7 @@ export default function DashboardPage() {
                         style={{
                           fontFamily: "'DM Mono', monospace",
                           fontSize: 11,
-                          color: "#9CA3AF",
+                          color: "#D1D5DB",
                         }}
                       >
                         {i.displayDate}
@@ -572,7 +572,7 @@ export default function DashboardPage() {
                         style={{
                           fontFamily: "'DM Mono', monospace",
                           fontSize: 11,
-                          color: "#6B7280",
+                          color: "#E5E7EB",
                         }}
                       >
                         {formatDuration(i.duration)}
@@ -583,7 +583,7 @@ export default function DashboardPage() {
                         style={{
                           fontFamily: "'DM Mono', monospace",
                           fontSize: 11,
-                          color: "#6B7280",
+                          color: "#E5E7EB",
                         }}
                       >
                         {i.speakerCount}
@@ -594,7 +594,7 @@ export default function DashboardPage() {
                         style={{
                           fontFamily: "'DM Mono', monospace",
                           fontSize: 11,
-                          color: "#6B7280",
+                          color: "#E5E7EB",
                         }}
                       >
                         {i.chunkCount}

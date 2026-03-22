@@ -2,8 +2,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { X, Mail, Calendar } from "lucide-react";
 import Image from "next/image";
+import { ACCESS_TOKEN_KEY } from "@/lib/api";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://uris.onrender.com";
+const RAW_API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = RAW_API_BASE.replace(/\/api\/?$/, "");
 
 // ── URIS design tokens ────────────────────────────────────────────────────────
 const C = {
@@ -78,7 +80,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isOpen, onClose }) => {
 
       try {
         const token = typeof window !== "undefined"
-          ? window.localStorage.getItem("uris_access_token")
+          ? window.localStorage.getItem(ACCESS_TOKEN_KEY)
           : null;
 
         const response = await fetch(`${API_BASE}/auth/me`, {

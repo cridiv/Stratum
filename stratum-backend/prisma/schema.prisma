@@ -7,9 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  interviews Interview[]
+
+  @@map("users")
+}
+
 model Interview {
   id                    String   @id @default(uuid())
   interviewId           String   @unique
+  userId                String?
+  user                  User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   filename              String
   duration              Float
   speakerCount          Int
@@ -23,6 +36,7 @@ model Interview {
   updatedAt             DateTime @updatedAt
   chunks                Chunk[]
 
+  @@index([userId])
   @@map("interviews")
 }
 

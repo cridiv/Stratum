@@ -12,6 +12,8 @@ NestJS calls these. Frontend never touches this directly.
 
 import uuid
 import logging
+import os
+import tempfile
 from pathlib import Path
 import numpy as np
 
@@ -23,8 +25,12 @@ from pipelines.orchestrator import run_pipeline
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-# Where session artifacts are stored
-SESSIONS_DIR = Path("sessions")
+# Where session artifacts are stored (outside repository by default)
+# Can be overridden with STRATUM_SESSIONS_DIR.
+SESSIONS_DIR = Path(
+    os.getenv("STRATUM_SESSIONS_DIR")
+    or (Path(tempfile.gettempdir()) / "stratum" / "sessions")
+)
 
 
 def _to_json_safe(value):

@@ -4,6 +4,17 @@
 
 const RAW_API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 const API_BASE = RAW_API_BASE.replace(/\/api\/?$/, "");
+export const ACCESS_TOKEN_KEY = "stratum_access_token";
+
+export function getAccessToken() {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem(ACCESS_TOKEN_KEY);
+}
+
+function getAuthHeaders() {
+  const token = getAccessToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
 
 export interface InterviewData {
   id: string;
@@ -54,7 +65,9 @@ export interface AnalyzeInterviewResponse {
  * List all interviews
  */
 export async function listInterviews() {
-  const res = await fetch(`${API_BASE}/interviews`);
+  const res = await fetch(`${API_BASE}/interviews`, {
+    headers: getAuthHeaders(),
+  });
   // Treat missing collection endpoints or no-content as an empty records state.
   if (res.status === 404 || res.status === 204) {
     return [] as InterviewData[];
@@ -72,6 +85,7 @@ export async function analyzeInterview(file: File) {
 
   const res = await fetch(`${API_BASE}/interviews/analyze`, {
     method: "POST",
+    headers: getAuthHeaders(),
     body: formData,
   });
 
@@ -83,7 +97,9 @@ export async function analyzeInterview(file: File) {
  * Get a single interview with all chunks
  */
 export async function getInterview(interviewId: string) {
-  const res = await fetch(`${API_BASE}/interviews/${interviewId}`);
+  const res = await fetch(`${API_BASE}/interviews/${interviewId}`, {
+    headers: getAuthHeaders(),
+  });
   if (!res.ok) throw new Error(`Failed to fetch interview: ${res.statusText}`);
   return res.json() as Promise<InterviewData>;
 }
@@ -97,7 +113,10 @@ export async function getInterviewChunks(
   take = 20
 ) {
   const res = await fetch(
-    `${API_BASE}/interviews/${interviewId}/chunks?skip=${skip}&take=${take}`
+    `${API_BASE}/interviews/${interviewId}/chunks?skip=${skip}&take=${take}`,
+    {
+      headers: getAuthHeaders(),
+    }
   );
   if (!res.ok) throw new Error(`Failed to fetch chunks: ${res.statusText}`);
   return res.json() as Promise<ChunkRaw[]>;
@@ -107,7 +126,9 @@ export async function getInterviewChunks(
  * Get audit findings for an interview
  */
 export async function getInterviewAudit(interviewId: string) {
-  const res = await fetch(`${API_BASE}/interviews/${interviewId}/audit`);
+  const res = await fetch(`${API_BASE}/interviews/${interviewId}/audit`, {
+    headers: getAuthHeaders(),
+  });
   if (!res.ok) throw new Error(`Failed to fetch audit: ${res.statusText}`);
   return res.json() as Promise<{ audit: Record<string, unknown>; scores: Record<string, unknown> }>;
 }
@@ -118,6 +139,7 @@ export async function getInterviewAudit(interviewId: string) {
 export async function formatTranscript(interviewId: string) {
   const res = await fetch(`${API_BASE}/interviews/${interviewId}/format-transcript`, {
     method: "POST",
+    headers: getAuthHeaders(),
   });
   if (!res.ok) throw new Error(`Failed to format transcript: ${res.statusText}`);
   return res.json() as Promise<{

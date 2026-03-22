@@ -5,12 +5,16 @@ import {
   Get,
   Param,
   Query,
+  Req,
   UploadedFile,
   UseInterceptors,
+  UseGuards,
   Logger,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname, join } from 'path';
@@ -20,11 +24,19 @@ import { InterviewService } from './interview.service';
 import { CloudinaryService } from './cloudinary.service';
 import { FastApiService } from './fastapi.service';
 
+interface AuthenticatedRequest extends Request {
+  user: {
+    userId: string;
+    email: string;
+  };
+}
+
 // Temp directory for uploaded files before pipeline processes them
 const UPLOAD_DIR = join(process.cwd(), 'uploads');
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 @Controller('interviews')
+@UseGuards(AuthGuard('jwt'))
 export class InterviewController {
   private readonly logger = new Logger(InterviewController.name);
 
@@ -53,6 +65,7 @@ export class InterviewController {
   )
   async analyze(
     @UploadedFile() file: Express.Multer.File,
+    @Req() req: AuthenticatedRequest,
     @Query('ground_truth_path') groundTruthPath?: string,
   ) {
     if (!file) {
@@ -91,6 +104,7 @@ export class InterviewController {
       // -- Step 4: Save interview + chunks to DB
       const interview = await this.interviewService.saveResult(
         pipelineOutput,
+        req.user.userId,
         file.originalname,
         audioUrlMap,
         fullAudioUrl,
@@ -121,8 +135,8 @@ export class InterviewController {
   // ---------------------------------------------------------------------------
 
   @Get()
-  async findAll() {
-    return this.interviewService.findAll();
+  async findAll(@Req() req: AuthenticatedRequest) {
+    return this.interviewService.findAll(req.user.userId);
   }
 
   // ---------------------------------------------------------------------------
@@ -130,8 +144,8 @@ export class InterviewController {
   // ---------------------------------------------------------------------------
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.interviewService.findOne(id);
+  async findOne(@Param('id') id: string, @Req() req: AuthenticatedRequest) {
+    return this.interviewService.findOne(id, req.user.userId);
   }
 
   // ---------------------------------------------------------------------------
@@ -141,11 +155,13 @@ export class InterviewController {
   @Get(':id/chunks')
   async findChunks(
     @Param('id')     id:   string,
+    @Req()           req:  AuthenticatedRequest,
     @Query('skip')   skip: string,
     @Query('take')   take: string,
   ) {
     return this.interviewService.findChunks(
       id,
+      req.user.userId,
       skip ? parseInt(skip) : 0,
       take ? parseInt(take) : 20,
     );
@@ -156,8 +172,8 @@ export class InterviewController {
   // ---------------------------------------------------------------------------
 
   @Get(':id/audit')
-  async findAudit(@Param('id') id: string) {
-    return this.interviewService.findAudit(id);
+  async findAudit(@Param('id') id: string, @Req() req: AuthenticatedRequest) {
+    return this.interviewService.findAudit(id, req.user.userId);
   }
 
   // ---------------------------------------------------------------------------
@@ -165,7 +181,7 @@ export class InterviewController {
   // ---------------------------------------------------------------------------
 
   @Post(':id/format-transcript')
-  async formatTranscript(@Param('id') id: string) {
+  async formatTranscript(@Param('id') id: string, @Req() req: AuthenticatedRequest) {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       throw new HttpException(
@@ -175,7 +191,11 @@ export class InterviewController {
     }
 
     try {
-      const result = await this.interviewService.formatAndSaveTranscript(id, apiKey);
+      const result = await this.interviewService.formatAndSaveTranscript(
+        id,
+        req.user.userId,
+        apiKey,
+      );
       return {
         interviewId: id,
         title: result.title,

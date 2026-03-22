@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import SideBar, { SidebarProvider, useSidebar } from "./SideBar";
+import ThemeProvider from "./ThemeProvider";
 
 function ShellContent({ children }: { children: ReactNode }) {
   const { isOpen } = useSidebar();
@@ -20,9 +21,11 @@ function ShellContent({ children }: { children: ReactNode }) {
 
 export default function AppShell({ children }: { children: ReactNode }) {
   return (
-    <SidebarProvider>
-      <SideBar />
-      <ShellContent>{children}</ShellContent>
-    </SidebarProvider>
+    <ThemeProvider>
+      <SidebarProvider>
+        <SideBar />
+        <ShellContent>{children}</ShellContent>
+      </SidebarProvider>
+    </ThemeProvider>
   );
 }
