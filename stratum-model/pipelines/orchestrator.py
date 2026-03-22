@@ -208,9 +208,12 @@ def run_pipeline(
     print(f"\nPipeline complete. {len(fused_chunks)} chunks ready.\n")
 
     return {
+        "interview_id": interview_id,
         "chunks":      fused_chunks,
         "audit":       audit,
+        "utterances":  utterances_for_scoring,
         "scores":      scores,
+        "normalized_path": str(ingestion_result.normalized_path),
         "output_path": output_json_path,
     }
 

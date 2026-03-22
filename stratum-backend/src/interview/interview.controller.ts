@@ -1,3 +1,4 @@
+// src/interview/interview.controller.ts
 import {
   Controller,
   Post,
@@ -68,20 +69,34 @@ export class InterviewController {
         groundTruthPath,
       );
 
-      // -- Step 2: Upload chunk audio files to Cloudinary
+      // -- Step 2: Upload full normalized WAV to Cloudinary
+      const fullAudioUrl = await this.cloudinaryService.uploadFullAudio(
+        pipelineOutput.normalized_path,
+        pipelineOutput.interview_id,
+      );
+
+      // -- Step 3: Upload chunk audio files to Cloudinary
       const audioUrlMap = await this.cloudinaryService.uploadAllChunks(
         pipelineOutput.chunks,
         pipelineOutput.interview_id,
       );
 
-      // -- Step 3: Save interview + chunks to DB
+      if (!fullAudioUrl && audioUrlMap.size === 0) {
+        throw new HttpException(
+          'Audio upload to Cloudinary failed. Verify Cloudinary credentials and artifact path configuration.',
+          HttpStatus.BAD_GATEWAY,
+        );
+      }
+
+      // -- Step 4: Save interview + chunks to DB
       const interview = await this.interviewService.saveResult(
         pipelineOutput,
         file.originalname,
         audioUrlMap,
+        fullAudioUrl,
       );
 
-      // -- Step 4: Clean up temp upload file
+      // -- Step 5: Clean up temp upload file
       fs.unlink(file.path, () => {});
 
       return {
@@ -89,6 +104,7 @@ export class InterviewController {
         chunkCount:   interview.chunkCount,
         speakerCount: interview.speakerCount,
         duration:     interview.duration,
+        audioUrl:     interview.audioUrl,
         audit:        pipelineOutput.audit,
         scores:       pipelineOutput.scores ?? null,
       };
@@ -142,5 +158,36 @@ export class InterviewController {
   @Get(':id/audit')
   async findAudit(@Param('id') id: string) {
     return this.interviewService.findAudit(id);
+  }
+
+  // ---------------------------------------------------------------------------
+  // POST /api/interviews/:id/format-transcript
+  // ---------------------------------------------------------------------------
+
+  @Post(':id/format-transcript')
+  async formatTranscript(@Param('id') id: string) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      throw new HttpException(
+        'OPENAI_API_KEY not configured',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    try {
+      const result = await this.interviewService.formatAndSaveTranscript(id, apiKey);
+      return {
+        interviewId: id,
+        title: result.title,
+        paragraphCount: result.paragraphs.length,
+        paragraphs: result.paragraphs,
+      };
+    } catch (error) {
+      this.logger.error(`Format transcript failed for ${id}:`, error);
+      throw new HttpException(
+        `Failed to format transcript: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

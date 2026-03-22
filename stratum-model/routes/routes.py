@@ -1,6 +1,19 @@
+"""
+undertone / api / routes.py
+-----------------------------
+FastAPI routes — the interface between the model and the NestJS backend.
+
+Endpoints:
+  POST /analyze              — accepts audio/video file, runs full pipeline
+  GET  /chunk/{id}/audio     — streams WAV file for a given chunk
+
+NestJS calls these. Frontend never touches this directly.
+"""
+
 import uuid
 import logging
 from pathlib import Path
+import numpy as np
 
 from fastapi import APIRouter, File, UploadFile, HTTPException, Query
 from fastapi.responses import StreamingResponse
@@ -12,6 +25,21 @@ router = APIRouter()
 
 # Where session artifacts are stored
 SESSIONS_DIR = Path("sessions")
+
+
+def _to_json_safe(value):
+    """Recursively convert NumPy scalars/arrays into native JSON-safe values."""
+    if isinstance(value, dict):
+        return {k: _to_json_safe(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_to_json_safe(v) for v in value]
+    if isinstance(value, tuple):
+        return [_to_json_safe(v) for v in value]
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    return value
 
 
 # ---------------------------------------------------------------------------
@@ -69,13 +97,16 @@ async def analyze(
         logger.error(f"[/analyze] Pipeline failed: {e}")
         raise HTTPException(status_code=500, detail=f"Pipeline failed: {e}")
 
-    return {
-        "interview_id": interview_id,
-        "chunks":       result["chunks"],
-        "audit":        result["audit"],
-        "utterances":   result.get("utterances", []),
-        "scores":       result.get("scores"),
+    response_payload = {
+        "interview_id":    interview_id,
+        "chunks":          result["chunks"],
+        "audit":           result["audit"],
+        "utterances":      result.get("utterances", []),
+        "scores":          result.get("scores"),
+        "normalized_path": result.get("normalized_path"),
     }
+
+    return _to_json_safe(response_payload)
 
 
 # ---------------------------------------------------------------------------

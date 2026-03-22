@@ -1,6 +1,7 @@
 import asyncio
 import logging
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
 import assemblyai as aai
 from hume import AsyncHumeClient
@@ -199,4 +200,14 @@ def score_emotions(
     chunks:  list[dict],
     api_key: str,
 ) -> list[dict | None]:
-    return asyncio.run(_score_all_chunks(chunks, api_key))
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        # No active event loop in this thread: safe to run directly.
+        return asyncio.run(_score_all_chunks(chunks, api_key))
+
+    # FastAPI route handlers run inside an active loop. Run Hume async work
+    # in a dedicated worker thread that owns its own event loop.
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(lambda: asyncio.run(_score_all_chunks(chunks, api_key)))
+        return future.result()
