@@ -19,7 +19,7 @@ Undertone tells you how it was said.
 | `acoustic.py` | 5 | librosa feature extraction per chunk — energy, pitch, speech rate, silence, MFCCs |
 | `enrich.py` | 6 | Transcript alignment (word-level) + Hume AI async emotion scoring |
 | `fusion.py` | 7 | Merges all results, computes interview-relative signal distributions, derives boolean flags |
-| `run_pipeline.py` | — | Orchestrator — runs all steps end to end, returns complete chunk array |
+| `orchestrator.py` | — | Orchestrator — runs all steps end to end, returns complete chunk array |
 
 ---
 
@@ -94,17 +94,7 @@ object looks like this:
 
 ### Full pipeline (one command)
 ```bash
-python run_pipeline.py <audio_or_video_file> <assemblyai_key> <hume_key>
-```
-
-### Step-by-step tests
-```bash
-python test_segmentation.py  sessions/test_001/interview_test001_normalized.wav
-python test_transcribe.py    sessions/test_001/interview_test001_normalized.wav <assemblyai_key>
-python test_chunk_assembly.py sessions/test_001/interview_test001_normalized.wav <assemblyai_key>
-python test_acoustic.py      sessions/test_001/interview_test001_normalized.wav <assemblyai_key>
-python test_enrich.py        sessions/test_001/interview_test001_normalized.wav <assemblyai_key> <hume_key>
-python test_fusion.py        sessions/test_001/interview_test001_normalized.wav <assemblyai_key> <hume_key>
+python orchestrator.py <audio_or_video_file> <assemblyai_key> <hume_key>
 ```
 
 ---
@@ -131,16 +121,3 @@ python test_fusion.py        sessions/test_001/interview_test001_normalized.wav 
   and inline audio playback per chunk
 
 ---
-
-## Session Directory Structure
-
-```
-sessions/
-  interview_001/
-    interview_001_normalized.wav     # canonical signal, all steps read from here
-    interview_001_extracted.wav      # intermediate FFmpeg output (video only)
-    chunks/
-      chunk_000.wav
-      chunk_001.wav
-      ...
-```
