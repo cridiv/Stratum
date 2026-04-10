@@ -1,3 +1,5 @@
+https://youtu.be/s6MsSUFv1sU?si=QZnp_rcpT6v-vj7N
+
 # Stratum — Pipeline Overview
 
 Audio-native interview analyzer. Extracts acoustic, emotional, and semantic
