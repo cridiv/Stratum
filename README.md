@@ -1,4 +1,4 @@
-https://youtu.be/s6MsSUFv1sU?si=QZnp_rcpT6v-vj7N
+[![Stratum Demo](https://img.youtube.com/vi/s6MsSUFv1sU/maxresdefault.jpg)](https://www.youtube.com/watch?v=s6MsSUFv1sU)
 
 # Stratum — Pipeline Overview
 
